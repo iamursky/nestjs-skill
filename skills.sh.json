@@ -1,0 +1,12 @@
+{
+  "$schema": "https://skills.sh/schemas/skills.sh.schema.json",
+  "groupings": [
+    {
+      "title": "NestJS",
+      "description": "Reference skill for NestJS — the progressive, TypeScript-first Node.js framework. Covers controllers, providers & dependency injection, modules, the request pipeline (middleware, guards, interceptors, pipes, exception filters), validation, configuration, databases (TypeORM/Sequelize/Mongoose/Prisma), security & auth, GraphQL, WebSockets, microservices, OpenAPI/Swagger, testing, the nest CLI, and deployment.",
+      "skills": [
+        "nestjs"
+      ]
+    }
+  ]
+}
