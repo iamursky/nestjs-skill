@@ -109,7 +109,7 @@ To begin using the `User` entity, we need to let TypeORM know about it by insert
 ```typescript title="app.module.ts"
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './users/user.entity';
+import { User } from './users/user.entity.js';
 
 @Module({
   imports: [
@@ -133,9 +133,9 @@ Next, let's look at the `UsersModule`:
 ```typescript title="users.module.ts"
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UsersService } from './users.service';
-import { UsersController } from './users.controller';
-import { User } from './user.entity';
+import { UsersService } from './users.service.js';
+import { UsersController } from './users.controller.js';
+import { User } from './user.entity.js';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User])],
@@ -151,7 +151,7 @@ This module uses the `forFeature()` method to define which repositories are regi
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User } from './user.entity';
+import { User } from './user.entity.js';
 
 @Injectable()
 export class UsersService {
@@ -182,7 +182,7 @@ You can do this by exporting the whole module, like this:
 ```typescript title="users.module.ts"
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './user.entity';
+import { User } from './user.entity.js';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User])],
@@ -195,9 +195,9 @@ Now if we import `UsersModule` in `UserHttpModule`, we can use `@InjectRepositor
 
 ```typescript title="users-http.module.ts"
 import { Module } from '@nestjs/common';
-import { UsersModule } from './users.module';
-import { UsersService } from './users.service';
-import { UsersController } from './users.controller';
+import { UsersModule } from './users.module.js';
+import { UsersService } from './users.service.js';
+import { UsersController } from './users.controller.js';
 
 @Module({
   imports: [UsersModule],
@@ -216,7 +216,7 @@ There are three types of relations:
 <table>
   <tr>
     <td><code>One-to-one</code></td>
-    <td>Every row in the primary table has one and only one associated row in the foreign table.  Use the <code>@OneToOne()</code> decorator to define this type of relation.</td>
+    <td>Every row in the primary table has one and only one associated row in the foreign table. Use the <code>@OneToOne()</code> decorator to define this type of relation.</td>
   </tr>
   <tr>
     <td><code>One-to-many / Many-to-one</code></td>
@@ -232,7 +232,7 @@ To define relations in entities, use the corresponding **decorators**. For examp
 
 ```typescript title="user.entity.ts"
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-import { Photo } from '../photos/photo.entity';
+import { Photo } from '../photos/photo.entity.js';
 
 @Entity()
 export class User {
@@ -284,7 +284,7 @@ You can define an entity and its columns right in the model, using decorators. B
 
 ```typescript
 import { EntitySchema } from 'typeorm';
-import { User } from './user.entity';
+import { User } from './user.entity.js';
 
 export const UserSchema = new EntitySchema<User>({
   name: 'User',
@@ -323,9 +323,9 @@ Nest allows you to use an `EntitySchema` instance wherever an `Entity` is expect
 ```typescript
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserSchema } from './user.schema';
-import { UsersController } from './users.controller';
-import { UsersService } from './users.service';
+import { UserSchema } from './user.schema.js';
+import { UsersController } from './users.controller.js';
+import { UsersService } from './users.service.js';
 
 @Module({
   imports: [TypeOrmModule.forFeature([UserSchema])],
@@ -399,7 +399,7 @@ import {
   EventSubscriber,
   InsertEvent,
 } from 'typeorm';
-import { User } from './user.entity';
+import { User } from './user.entity.js';
 
 @EventSubscriber()
 export class UserSubscriber implements EntitySubscriberInterface<User> {
@@ -424,10 +424,10 @@ Now, add the `UserSubscriber` class to the `providers` array:
 ```typescript
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './user.entity';
-import { UsersController } from './users.controller';
-import { UsersService } from './users.service';
-import { UserSubscriber } from './user.subscriber';
+import { User } from './user.entity.js';
+import { UsersController } from './users.controller.js';
+import { UsersService } from './users.service.js';
+import { UserSubscriber } from './user.subscriber.js';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User])],
@@ -772,7 +772,7 @@ To begin using the `User` model, we need to let Sequelize know about it by inser
 ```typescript title="app.module.ts"
 import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { User } from './users/user.model';
+import { User } from './users/user.model.js';
 
 @Module({
   imports: [
@@ -795,9 +795,9 @@ Next, let's look at the `UsersModule`:
 ```typescript title="users.module.ts"
 import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { User } from './user.model';
-import { UsersController } from './users.controller';
-import { UsersService } from './users.service';
+import { User } from './user.model.js';
+import { UsersController } from './users.controller.js';
+import { UsersService } from './users.service.js';
 
 @Module({
   imports: [SequelizeModule.forFeature([User])],
@@ -812,7 +812,7 @@ This module uses the `forFeature()` method to define which models are registered
 ```typescript title="users.service.ts"
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { User } from './user.model';
+import { User } from './user.model.js';
 
 @Injectable()
 export class UsersService {
@@ -848,7 +848,7 @@ You can do this by exporting the whole module, like this:
 ```typescript title="users.module.ts"
 import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { User } from './user.entity';
+import { User } from './user.entity.js';
 
 @Module({
   imports: [SequelizeModule.forFeature([User])],
@@ -861,9 +861,9 @@ Now if we import `UsersModule` in `UserHttpModule`, we can use `@InjectModel(Use
 
 ```typescript title="users-http.module.ts"
 import { Module } from '@nestjs/common';
-import { UsersModule } from './users.module';
-import { UsersService } from './users.service';
-import { UsersController } from './users.controller';
+import { UsersModule } from './users.module.js';
+import { UsersService } from './users.service.js';
+import { UsersController } from './users.controller.js';
 
 @Module({
   imports: [UsersModule],
@@ -898,7 +898,7 @@ To define relations in models, use the corresponding **decorators**. For example
 
 ```typescript title="user.model.ts"
 import { Column, Model, Table, HasMany } from 'sequelize-typescript';
-import { Photo } from '../photos/photo.model';
+import { Photo } from '../photos/photo.model.js';
 
 @Table
 export class User extends Model {

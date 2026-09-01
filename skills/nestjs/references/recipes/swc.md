@@ -156,8 +156,8 @@ import { ReadonlyVisitor } from '@nestjs/swagger/dist/plugin';
 
 const generator = new PluginMetadataGenerator();
 generator.generate({
-  visitors: [new ReadonlyVisitor({ introspectComments: true, pathToSource: __dirname })],
-  outputDir: __dirname,
+  visitors: [new ReadonlyVisitor({ introspectComments: true, pathToSource: import.meta.dirname })],
+  outputDir: import.meta.dirname,
   watch: true,
   tsconfigPath: 'apps/<name>/tsconfig.app.json',
 });
@@ -300,7 +300,7 @@ export default defineConfig({
   resolve: {
     alias: {
       // Ensure Vitest correctly resolves TypeScript path aliases
-      'src': resolve(__dirname, './src'),
+      'src': resolve(import.meta.dirname, './src'),
     },
   },
 });
@@ -354,12 +354,12 @@ export default defineConfig({
 Unlike Jest, Vitest does not automatically resolve TypeScript path aliases like `src/`. This may lead to dependency resolution errors during testing. To resolve this issue, add the following `resolve.alias` configuration in your `vitest.config.ts` file:
 
 ```ts
-import { resolve } from 'path';
+import { resolve } from 'node:path';
 
 export default defineConfig({
   resolve: {
     alias: {
-      'src': resolve(__dirname, './src'),
+      'src': resolve(import.meta.dirname, './src'),
     },
   },
 });

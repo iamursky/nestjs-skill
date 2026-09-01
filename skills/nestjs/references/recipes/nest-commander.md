@@ -4,7 +4,7 @@
 
 Expanding on the [standalone application](https://docs.nestjs.com/standalone-applications) docs there's also the [nest-commander](https://jmcdo29.github.io/nest-commander) package for writing command line applications in a structure similar to your typical Nest application.
 
-> info **info** `nest-commander` is a third party package and is not managed by the entirety of the NestJS core team. Please, report any issues found with the library in the [appropriate repository](https://github.com/jmcdo29/nest-commander/issues/new/choose)
+> info **Info** `nest-commander` is a third party package and is not managed by the entirety of the NestJS core team. Please, report any issues found with the library in the [appropriate repository](https://github.com/jmcdo29/nest-commander/issues/new/choose)
 
 ## Installation
 
@@ -26,21 +26,21 @@ Similar to how in a NestJS application we can use the `NestFactory` to create a 
 
 ```ts
 import { CommandFactory } from 'nest-commander';
-import { AppModule } from './app.module';
+import { AppModule } from './app.module.js';
 
 async function bootstrap() {
   await CommandFactory.run(AppModule);
 }
 
-bootstrap();
+await bootstrap();
 ```
 
 By default, Nest's logger is disabled when using the `CommandFactory`. It's possible to provide it though, as the second argument to the `run` function. You can either provide a custom NestJS logger, or an array of log levels you want to keep - it might be useful to at least provide `['error']` here, if you only want to print out Nest's error logs.
 
 ```ts
 import { CommandFactory } from 'nest-commander';
-import { AppModule } from './app.module';
-import { LogService } from './log.service';
+import { AppModule } from './app.module.js';
+import { LogService } from './log.service.js';
 
 async function bootstrap() {
   await CommandFactory.run(AppModule, new LogService());
@@ -49,7 +49,7 @@ async function bootstrap() {
   await CommandFactory.run(AppModule, ['warn', 'error']);
 }
 
-bootstrap();
+await bootstrap();
 ```
 
 And that's it. Under the hood, `CommandFactory` will worry about calling `NestFactory` for you and calling `app.close()` when necessary, so you shouldn't need to worry about memory leaks there. If you need to add in some error handling, there's always `try/catch` wrapping the `run` command, or you can chain on some `.catch()` method to the `bootstrap()` call.
@@ -64,7 +64,7 @@ The following class would equate to having a CLI command that can take in the su
 
 ```ts
 import { Command, CommandRunner, Option } from 'nest-commander';
-import { LogService } from './log.service';
+import { LogService } from './log.service.js';
 
 interface BasicCommandOptions {
   string?: string;
@@ -151,7 +151,7 @@ async function bootstrap() {
   await CommandFactory.run(AppModule);
 }
 
-bootstrap();
+await bootstrap();
 ```
 
 And just like that, you've got a command line application.

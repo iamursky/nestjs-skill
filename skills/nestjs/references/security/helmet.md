@@ -36,6 +36,7 @@ app.use(helmet());
 >     },
 >   },
 > }));
+> ```
 
 ## Use with Fastify
 

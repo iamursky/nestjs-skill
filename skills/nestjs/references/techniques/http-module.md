@@ -8,7 +8,7 @@
 
 ## Installation
 
-To begin using it, we first install required dependencies.
+To begin using it, we first install the required dependencies.
 
 ```bash
 $ npm i --save @nestjs/axios axios
@@ -28,7 +28,7 @@ export class CatsModule {}
 
 Next, inject `HttpService` using normal constructor injection.
 
-> info **Hint** `HttpModule` and `HttpService` are imported from `@nestjs/axios` package.
+> info **Hint** `HttpModule` and `HttpService` are imported from the `@nestjs/axios` package.
 
 ```typescript
 @Injectable()
@@ -98,7 +98,7 @@ HttpModule.registerAsync({
 });
 ```
 
-The construction above instantiates `HttpConfigService` inside `HttpModule`, using it to create an options object. Note that in this example, the `HttpConfigService` has to implement `HttpModuleOptionsFactory` interface as shown below. The `HttpModule` will call the `createHttpOptions()` method on the instantiated object of the supplied class.
+The construction above instantiates `HttpConfigService` inside `HttpModule`, using it to create an options object. Note that in this example, the `HttpConfigService` has to implement the `HttpModuleOptionsFactory` interface, as shown below. The `HttpModule` will call the `createHttpOptions()` method on the instantiated object of the supplied class.
 
 ```typescript
 @Injectable()
