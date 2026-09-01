@@ -43,13 +43,13 @@ handleEvent(@MessageBody() data: string): string {
 }
 ```
 
-> info **Hint** `@SubscribeMessage()` and `@MessageBody()` decorators are imported from `@nestjs/websockets` package.
+> info **Hint** `@SubscribeMessage()` and `@MessageBody()` decorators are imported from the `@nestjs/websockets` package.
 
 Once the gateway is created, we can register it in our module.
 
 ```typescript title="events.module.ts"
 import { Module } from '@nestjs/common';
-import { EventsGateway } from './events.gateway';
+import { EventsGateway } from './events.gateway.js';
 
 @Module({
   providers: [EventsGateway]
@@ -90,7 +90,7 @@ handleEvent(
 }
 ```
 
-> info **Hint** `@ConnectedSocket()` decorator is imported from `@nestjs/websockets` package.
+> info **Hint** `@ConnectedSocket()` decorator is imported from the `@nestjs/websockets` package.
 
 However, in this case, you won't be able to leverage interceptors. If you don't want to respond to the user, you can simply skip the `return` statement (or explicitly return a "falsy" value, e.g. `undefined`).
 
@@ -108,7 +108,7 @@ socket.emit('events', { name: 'Nest' }, (data) => console.log(data));
 
 While returning a value from a message handler implicitly sends an acknowledgement, advanced scenarios often require direct control over the acknowledgement callback.
 
-The `@Ack()` parameter decorator allows injecting the `ack` callback function directly into a message handler.
+The `@Ack()` parameter decorator allows you to inject the `ack` callback function directly into a message handler.
 Without using the decorator, this callback is passed as the third argument of the method.
 
 ```typescript title="events.gateway.ts"
@@ -133,7 +133,7 @@ handleEvent(@MessageBody() data: unknown): WsResponse<unknown> {
 }
 ```
 
-> info **Hint** The `WsResponse` interface is imported from `@nestjs/websockets` package.
+> info **Hint** The `WsResponse` interface is imported from the `@nestjs/websockets` package.
 
 > warning **Warning** You should return a class instance that implements `WsResponse` if your `data` field relies on `ClassSerializerInterceptor`, as it ignores plain JavaScript object responses.
 
@@ -195,7 +195,7 @@ There are 3 useful lifecycle hooks available. All of them have corresponding int
   </tr>
 </table>
 
-> info **Hint** Each lifecycle interface is exposed from `@nestjs/websockets` package.
+> info **Hint** Each lifecycle interface is exposed from the `@nestjs/websockets` package.
 
 ## Server and Namespace
 
@@ -221,6 +221,51 @@ export class EventsGateway {
 > warning **Notice** The `@WebSocketServer()` decorator is imported from the `@nestjs/websockets` package.
 
 Nest will automatically assign the server instance to this property once it is ready to use.
+
+## Request-scoped gateways
+
+Starting with NestJS v12, gateways support [request-scoped](https://docs.nestjs.com/fundamentals/injection-scopes) providers. A new instance of every request-scoped dependency is created per connected socket, and that instance lives for as long as the connection does - so it can hold per-connection state safely.
+
+Inject the socket itself with the `REQUEST` token, exactly as you would inject the HTTP request in a request-scoped HTTP provider:
+
+```typescript title="connection-state.service.ts"
+import { Inject, Injectable, Scope } from '@nestjs/common';
+import { REQUEST } from '@nestjs/core';
+import { Socket } from 'socket.io';
+
+@Injectable({ scope: Scope.REQUEST })
+export class ConnectionStateService {
+  private sequence = 0;
+
+  constructor(@Inject(REQUEST) private readonly client: Socket) {}
+
+  next() {
+    return { clientId: this.client.id, sequence: ++this.sequence };
+  }
+}
+```
+
+The gateway then injects it like any other provider:
+
+```typescript title="events.gateway.ts"
+@WebSocketGateway()
+export class EventsGateway {
+  constructor(private readonly connectionState: ConnectionStateService) {}
+
+  handleConnection(@ConnectedSocket() client: Socket) {
+    client.emit('connected', this.connectionState.next());
+  }
+
+  @SubscribeMessage('state')
+  onState() {
+    return { event: 'state', data: this.connectionState.next() };
+  }
+}
+```
+
+Because the scope is tied to the connection rather than to a single message, the `sequence` counter above increments across every message received on that socket, while a second client gets its own independent instance. Nest tears the request-scoped instances down when the socket disconnects.
+
+> warning **Notice** As with HTTP, request-scoped providers add per-connection instantiation overhead. Use the default singleton scope unless you genuinely need per-connection state.
 
 ## Example
 

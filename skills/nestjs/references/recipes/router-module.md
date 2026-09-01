@@ -5,7 +5,7 @@
 > info **Hint** This chapter is only relevant to HTTP-based applications.
 
 In an HTTP application (for example, REST API), the route path for a handler is determined by concatenating the (optional) prefix declared for the controller (inside the `@Controller` decorator),
-and any path specified in the method's decorator (e.g, `@Get('users')`). You can learn more about that in [this section](https://docs.nestjs.com/controllers#routing). Additionally,
+and any path specified in the method's decorator (e.g., `@Get('users')`). You can learn more about that in [this section](https://docs.nestjs.com/controllers#routing). Additionally,
 you can define a [global prefix](https://docs.nestjs.com/faq/global-prefix) for all routes registered in your application, or enable [versioning](https://docs.nestjs.com/techniques/versioning).
 
 Also, there are edge-cases when defining a prefix at a module-level (and so for all controllers registered inside that module) may come in handy.

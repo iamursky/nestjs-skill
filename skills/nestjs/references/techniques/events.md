@@ -8,7 +8,7 @@
 
 ## Getting started
 
-First install the required package:
+First, install the required package:
 
 ```shell
 $ npm i --save @nestjs/event-emitter

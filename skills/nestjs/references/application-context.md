@@ -13,7 +13,7 @@ async function bootstrap() {
   const app = await NestFactory.createApplicationContext(AppModule);
   // your application logic here ...
 }
-bootstrap();
+await bootstrap();
 ```
 
 ## Retrieving providers from static modules
@@ -86,7 +86,7 @@ async function bootstrap() {
   // application logic...
   await app.close();
 }
-bootstrap();
+await bootstrap();
 ```
 
 And as mentioned in the [Lifecycle events](https://docs.nestjs.com/fundamentals/lifecycle-events) chapter, that will trigger lifecycle hooks.

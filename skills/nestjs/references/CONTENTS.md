@@ -149,19 +149,12 @@ Targets **NestJS v11**. **136 pages.**
 - [Passport (authentication)](recipes/passport.md) — `recipes/passport.md`
 - [Hot Reload](recipes/hot-reload.md) — `recipes/hot-reload.md`
 - [MikroORM](recipes/mikroorm.md) — `recipes/mikroorm.md`
-- [SQL (TypeORM)](recipes/sql-typeorm.md) — `recipes/sql-typeorm.md`
-- [MongoDB (Mongoose)](recipes/mongodb.md) — `recipes/mongodb.md`
-- [SQL (Sequelize)](recipes/sql-sequelize.md) — `recipes/sql-sequelize.md`
 - [Router module](recipes/router-module.md) — `recipes/router-module.md`
-- [Documentation](recipes/documentation.md) — `recipes/documentation.md`
 - [CQRS](recipes/cqrs.md) — `recipes/cqrs.md`
 - [Prisma](recipes/prisma.md) — `recipes/prisma.md`
-- [Sentry](recipes/sentry.md) — `recipes/sentry.md`
 - [Serve Static](recipes/serve-static.md) — `recipes/serve-static.md`
 - [Nest Commander](recipes/nest-commander.md) — `recipes/nest-commander.md`
 - [Async Local Storage](recipes/async-local-storage.md) — `recipes/async-local-storage.md`
-- [Necord](recipes/necord.md) — `recipes/necord.md`
-- [Suites](recipes/suites.md) — `recipes/suites.md`
 - [Healthchecks (Terminus)](recipes/terminus.md) — `recipes/terminus.md`
 
 ## FAQ
@@ -190,4 +183,14 @@ Targets **NestJS v11**. **136 pages.**
 - [Who is using Nest?](discover/who-uses.md) — `discover/who-uses.md`
 - [Official NestJS Consulting](enterprise.md) — `enterprise.md`
 - [Support](support.md) — `support.md`
+
+## Other pages
+
+- [Pre-request hooks](microservices/pre-request-hooks.md) — `microservices/pre-request-hooks.md`
+- [Dashboard](observability/dashboard.md) — `observability/dashboard.md`
+- [Distributed tracing](observability/distributed-tracing.md) — `observability/distributed-tracing.md`
+- [Manual instrumentation](observability/manual-instrumentation.md) — `observability/manual-instrumentation.md`
+- [MCP server](observability/mcp-server.md) — `observability/mcp-server.md`
+- [Overview](observability/overview.md) — `observability/overview.md`
+- [SDK](observability/sdk.md) — `observability/sdk.md`
 

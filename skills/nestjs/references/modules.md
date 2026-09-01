@@ -27,8 +27,8 @@ Next, we'll create the `CatsModule` to demonstrate how to group the controller a
 
 ```typescript title="cats/cats.module.ts"
 import { Module } from '@nestjs/common';
-import { CatsController } from './cats.controller';
-import { CatsService } from './cats.service';
+import { CatsController } from './cats.controller.js';
+import { CatsService } from './cats.service.js';
 
 @Module({
   controllers: [CatsController],
@@ -43,7 +43,7 @@ Above, we defined the `CatsModule` in the `cats.module.ts` file, and moved every
 
 ```typescript title="app.module.ts"
 import { Module } from '@nestjs/common';
-import { CatsModule } from './cats/cats.module';
+import { CatsModule } from './cats/cats.module.js';
 
 @Module({
   imports: [CatsModule],
@@ -85,8 +85,8 @@ Every module is automatically a **shared module**. Once created it can be reused
 
 ```typescript title="cats.module.ts"
 import { Module } from '@nestjs/common';
-import { CatsController } from './cats.controller';
-import { CatsService } from './cats.service';
+import { CatsController } from './cats.controller.js';
+import { CatsService } from './cats.service.js';
 
 @Module({
   controllers: [CatsController],
@@ -120,8 +120,8 @@ A module class can **inject** providers as well (e.g., for configuration purpose
 
 ```typescript title="cats.module.ts"
 import { Module } from '@nestjs/common';
-import { CatsController } from './cats.controller';
-import { CatsService } from './cats.service';
+import { CatsController } from './cats.controller.js';
+import { CatsService } from './cats.service.js';
 
 @Module({
   controllers: [CatsController],
@@ -142,8 +142,8 @@ When you want to provide a set of providers which should be available everywhere
 
 ```typescript
 import { Module, Global } from '@nestjs/common';
-import { CatsController } from './cats.controller';
-import { CatsService } from './cats.service';
+import { CatsController } from './cats.controller.js';
+import { CatsService } from './cats.service.js';
 
 @Global()
 @Module({
@@ -164,8 +164,8 @@ Dynamic modules in Nest allow you to create modules that can be configured at ru
 
 ```typescript
 import { Module, DynamicModule } from '@nestjs/common';
-import { createDatabaseProviders } from './database.providers';
-import { Connection } from './connection.provider';
+import { createDatabaseProviders } from './database.providers.js';
+import { Connection } from './connection.provider.js';
 
 @Module({
   providers: [Connection],
@@ -204,8 +204,8 @@ The `DatabaseModule` can be imported and configured in the following manner:
 
 ```typescript
 import { Module } from '@nestjs/common';
-import { DatabaseModule } from './database/database.module';
-import { User } from './users/entities/user.entity';
+import { DatabaseModule } from './database/database.module.js';
+import { User } from './users/entities/user.entity.js';
 
 @Module({
   imports: [DatabaseModule.forRoot([User])],
@@ -217,8 +217,8 @@ If you want to in turn re-export a dynamic module, you can omit the `forRoot()` 
 
 ```typescript
 import { Module } from '@nestjs/common';
-import { DatabaseModule } from './database/database.module';
-import { User } from './users/entities/user.entity';
+import { DatabaseModule } from './database/database.module.js';
+import { User } from './users/entities/user.entity.js';
 
 @Module({
   imports: [DatabaseModule.forRoot([User])],
