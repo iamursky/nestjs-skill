@@ -27,7 +27,7 @@ In this case, using the code first approach, we define schemas using TypeScript 
 
 ```typescript title="authors/models/author.model.ts"
 import { Field, Int, ObjectType } from '@nestjs/graphql';
-import { Post } from './post';
+import { Post } from './post.js';
 
 @ObjectType()
 export class Author {
@@ -79,7 +79,7 @@ For example:
 title: string;
 ```
 
-> info **Hint** You can also add a description to, or deprecate, the whole object type: `@ObjectType({ description: 'Author model' })`.
+> info **Hint** You can also add a description to, or deprecate, the whole object type: `@ObjectType({ description: 'Author model' })`. Likewise, if your application serves [multiple GraphQL endpoints](https://docs.nestjs.com/graphql/quick-start#multiple-endpoints), you can scope a type to a specific module: `@ObjectType({ registerIn: () => AuthorsModule })`.
 
 When the field is an array, we must manually indicate the array type in the `Field()` decorator's type function, as shown below:
 
@@ -612,7 +612,7 @@ However, if you add decorators directly to the automatically generated file, the
 
 ```typescript
 import { MinLength, MaxLength } from 'class-validator';
-import { Post } from '../../graphql.ts';
+import { Post } from '../../graphql.js';
 
 export class CreatePostInput extends Post {
   @MinLength(3)

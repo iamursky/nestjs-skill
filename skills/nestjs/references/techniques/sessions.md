@@ -6,7 +6,7 @@
 
 ## Use with Express (default)
 
-First install the [required package](https://github.com/expressjs/session) (and its types for TypeScript users):
+First, install the [required package](https://github.com/expressjs/session) (and its types for TypeScript users):
 
 ```shell
 $ npm i express-session
@@ -16,7 +16,7 @@ $ npm i -D @types/express-session
 Once the installation is complete, apply the `express-session` middleware as global middleware (for example, in your `main.ts` file).
 
 ```typescript
-import * as session from 'express-session';
+import session from 'express-session';
 // somewhere in your initialization file
 app.use(
   session({
@@ -63,7 +63,7 @@ findAll(@Session() session: Record<string, any>) {
 
 ## Use with Fastify
 
-First install the required package:
+First, install the required package:
 
 ```shell
 $ npm i @fastify/secure-session

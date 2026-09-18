@@ -6,7 +6,7 @@ An **HTTP cookie** is a small piece of data stored by the user's browser. Cookie
 
 ## Use with Express (default)
 
-First install the [required package](https://github.com/expressjs/cookie-parser) (and its types for TypeScript users):
+First, install the [required package](https://github.com/expressjs/cookie-parser) (and its types for TypeScript users):
 
 ```shell
 $ npm i cookie-parser
@@ -16,7 +16,7 @@ $ npm i -D @types/cookie-parser
 Once the installation is complete, apply the `cookie-parser` middleware as global middleware (for example, in your `main.ts` file).
 
 ```typescript
-import * as cookieParser from 'cookie-parser';
+import cookieParser from 'cookie-parser';
 // somewhere in your initialization file
 app.use(cookieParser());
 ```
@@ -57,7 +57,7 @@ findAll(@Res({ passthrough: true }) response: Response) {
 
 ## Use with Fastify
 
-First install the required package:
+First, install the required package:
 
 ```shell
 $ npm i @fastify/cookie

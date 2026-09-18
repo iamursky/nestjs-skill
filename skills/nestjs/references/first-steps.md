@@ -12,7 +12,7 @@ We'll mostly use TypeScript in the examples we provide, but you can always **swi
 
 ## Prerequisites
 
-Please make sure that [Node.js](https://nodejs.org) (version >= 20) is installed on your operating system.
+Please make sure that [Node.js](https://nodejs.org) is installed on your operating system. Running a Nest application requires **v20.19 or later** (or **v22.12+** on the 22.x line); the Nest CLI's generators require **v22.22.3+, v24.15+, or v26+**. The latest active LTS satisfies both and is what we recommend.
 
 ## Setup
 
@@ -22,6 +22,10 @@ Setting up a new project is quite simple with the [Nest CLI](https://docs.nestjs
 $ npm i -g @nestjs/cli
 $ nest new project-name
 ```
+
+The CLI asks whether you want to generate a CommonJS or ESM project. ESM starters use Vitest and oxlint by default.
+
+It also asks whether to set up [NestJS Observe](https://www.observe.nestjs.com/ 'NestJS Observe'), the official observability platform for Nest. Answering yes adds the `@nestjs/observe` SDK to the generated project already wired into `AppModule` and `NestFactory.create()`, so requests, background jobs, errors, and distributed traces start reporting as soon as you supply an app key - the free plan needs no payment details. The prompt defaults to no and can be skipped either way with `--observe` or `--no-observe`; see the [Observability](https://docs.nestjs.com/observability/overview) chapter for what it covers.
 
 > info **Hint** To create a new project with TypeScript's [stricter](https://www.typescriptlang.org/tsconfig#strict) feature set, pass the `--strict` flag to the `nest new` command.
 
@@ -52,16 +56,16 @@ The `main.ts` includes an async function, which will **bootstrap** our applicati
 
 ```typescript title="main.ts"
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
+import { AppModule } from './app.module.js';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   await app.listen(process.env.PORT ?? 3000);
 }
-bootstrap();
+await bootstrap();
 ```
 
-To create a Nest application instance, we use the core `NestFactory` class. `NestFactory` exposes a few static methods that allow creating an application instance. The `create()` method returns an application object, which fulfills the `INestApplication` interface. This object provides a set of methods which are described in the coming chapters. In the `main.ts` example above, we simply start up our HTTP listener, which lets the application await inbound HTTP requests.
+To create a Nest application instance, we use the core `NestFactory` class. `NestFactory` exposes a few static methods that allow you to create an application instance. The `create()` method returns an application object, which fulfills the `INestApplication` interface. This object provides a set of methods which are described in the coming chapters. In the `main.ts` example above, we simply start up our HTTP listener, which lets the application await inbound HTTP requests.
 
 Note that a project scaffolded with the Nest CLI creates an initial project structure that encourages developers to follow the convention of keeping each module in its own dedicated directory.
 
@@ -106,16 +110,16 @@ This command will watch your files, automatically recompiling and reloading the 
 
 ## Linting and formatting
 
-[CLI](https://docs.nestjs.com/cli/overview) provides best effort to scaffold a reliable development workflow at scale. Thus, a generated Nest project comes with both a code **linter** and **formatter** preinstalled (respectively [eslint](https://eslint.org/) and [prettier](https://prettier.io/)).
+[CLI](https://docs.nestjs.com/cli/overview) provides best effort to scaffold a reliable development workflow at scale. Thus, a generated Nest project comes with both a code **linter** and **formatter** preinstalled (respectively [oxlint](https://oxc.rs/docs/guide/usage/linter.html) and [prettier](https://prettier.io/)).
 
 > info **Hint** Not sure about the role of formatters vs linters? Learn the difference [here](https://prettier.io/docs/en/comparison.html).
 
-To ensure maximum stability and extensibility, we use the base [`eslint`](https://www.npmjs.com/package/eslint) and [`prettier`](https://www.npmjs.com/package/prettier) cli packages. This setup allows neat IDE integration with official extensions by design.
+To ensure a fast default developer workflow, newly generated projects use [`oxlint`](https://www.npmjs.com/package/oxlint) together with [`prettier`](https://www.npmjs.com/package/prettier).
 
 For headless environments where an IDE is not relevant (Continuous Integration, Git hooks, etc.) a Nest project comes with ready-to-use `npm` scripts.
 
 ```bash
-# Lint and autofix with eslint
+# Lint with oxlint
 $ npm run lint
 
 # Format with prettier
