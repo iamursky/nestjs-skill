@@ -8,8 +8,8 @@ To quote the [Apollo docs](https://blog.apollographql.com/apollo-federation-f260
 
 - Building a graph should be **declarative.** With federation, you compose a graph declaratively from within your schema instead of writing imperative schema stitching code.
 - Code should be separated by **concern**, not by types. Often no single team controls every aspect of an important type like a User or Product, so the definition of these types should be distributed across teams and codebases, rather than centralized.
-- The graph should be simple for clients to consume. Together, federated services can form a complete, product-focused graph that accurately reflects how it’s being consumed on the client.
-- It’s just **GraphQL**, using only spec-compliant features of the language. Any language, not just JavaScript, can implement federation.
+- The graph should be simple for clients to consume. Together, federated services can form a complete, product-focused graph that accurately reflects how it's being consumed on the client.
+- It's just **GraphQL**, using only spec-compliant features of the language. Any language, not just JavaScript, can implement federation.
 
 > warning **Warning** Federation currently does not support subscriptions.
 
@@ -42,7 +42,7 @@ Resolver provides one additional method named `resolveReference()`. This method 
 
 ```typescript
 import { Args, Query, Resolver, ResolveReference } from '@nestjs/graphql';
-import { UsersService } from './users.service';
+import { UsersService } from './users.service.js';
 
 @Resolver('User')
 export class UsersResolver {
@@ -69,7 +69,7 @@ import {
 } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
-import { UsersResolver } from './users.resolver';
+import { UsersResolver } from './users.resolver.js';
 
 @Module({
   imports: [
@@ -105,8 +105,8 @@ Resolver provides one additional method named `resolveReference()`. This method 
 
 ```ts
 import { Args, Query, Resolver, ResolveReference } from '@nestjs/graphql';
-import { User } from './user.entity';
-import { UsersService } from './users.service';
+import { User } from './user.entity.js';
+import { UsersService } from './users.service.js';
 
 @Resolver(() => User)
 export class UsersResolver {
@@ -132,8 +132,8 @@ import {
   ApolloFederationDriverConfig,
 } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
-import { UsersResolver } from './users.resolver';
-import { UsersService } from './users.service'; // Not included in this example
+import { UsersResolver } from './users.resolver.js';
+import { UsersService } from './users.service.js'; // Not included in this example
 
 @Module({
   imports: [
@@ -179,8 +179,8 @@ In the following example, the `PostsResolver` provides the `getUser()` method th
 
 ```typescript
 import { Query, Resolver, Parent, ResolveField } from '@nestjs/graphql';
-import { PostsService } from './posts.service';
-import { Post } from './posts.interfaces';
+import { PostsService } from './posts.service.js';
+import type { Post } from './posts.interfaces.js';
 
 @Resolver('Post')
 export class PostsResolver {
@@ -207,7 +207,7 @@ import {
 } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
-import { PostsResolver } from './posts.resolver';
+import { PostsResolver } from './posts.resolver.js';
 
 @Module({
   imports: [
@@ -227,7 +227,7 @@ First, we will have to declare a class representing the `User` entity. Although 
 
 ```ts
 import { Directive, ObjectType, Field, ID } from '@nestjs/graphql';
-import { Post } from './post.entity';
+import { Post } from './post.entity.js';
 
 @ObjectType()
 @Directive('@extends')
@@ -246,9 +246,9 @@ Now let's create the corresponding resolver for our extension on the `User` enti
 
 ```ts
 import { Parent, ResolveField, Resolver } from '@nestjs/graphql';
-import { PostsService } from './posts.service';
-import { Post } from './post.entity';
-import { User } from './user.entity';
+import { PostsService } from './posts.service.js';
+import { Post } from './post.entity.js';
+import { User } from './user.entity.js';
 
 @Resolver(() => User)
 export class UsersResolver {
@@ -265,7 +265,7 @@ We also have to define the `Post` entity class:
 
 ```ts
 import { Directive, Field, ID, Int, ObjectType } from '@nestjs/graphql';
-import { User } from './user.entity';
+import { User } from './user.entity.js';
 
 @ObjectType()
 @Directive('@key(fields: "id")')
@@ -288,9 +288,9 @@ And its resolver:
 
 ```ts
 import { Query, Args, ResolveField, Resolver, Parent } from '@nestjs/graphql';
-import { PostsService } from './posts.service';
-import { Post } from './post.entity';
-import { User } from './user.entity';
+import { PostsService } from './posts.service.js';
+import { Post } from './post.entity.js';
+import { User } from './user.entity.js';
 
 @Resolver(() => Post)
 export class PostsResolver {
@@ -321,10 +321,10 @@ import {
   ApolloFederationDriverConfig,
 } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
-import { User } from './user.entity';
-import { PostsResolver } from './posts.resolvers';
-import { UsersResolver } from './users.resolvers';
-import { PostsService } from './posts.service'; // Not included in example
+import { User } from './user.entity.js';
+import { PostsResolver } from './posts.resolvers.js';
+import { UsersResolver } from './users.resolvers.js';
+import { PostsService } from './posts.service.js'; // Not included in example
 
 @Module({
   imports: [
@@ -412,7 +412,7 @@ Resolver provides one additional method named `resolveReference()`. This method 
 
 ```typescript
 import { Args, Query, Resolver, ResolveReference } from '@nestjs/graphql';
-import { UsersService } from './users.service';
+import { UsersService } from './users.service.js';
 
 @Resolver('User')
 export class UsersResolver {
@@ -439,7 +439,7 @@ import {
 } from '@nestjs/mercurius';
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
-import { UsersResolver } from './users.resolver';
+import { UsersResolver } from './users.resolver.js';
 
 @Module({
   imports: [
@@ -476,8 +476,8 @@ Resolver provides one additional method named `resolveReference()`. This method 
 
 ```ts
 import { Args, Query, Resolver, ResolveReference } from '@nestjs/graphql';
-import { User } from './user.entity';
-import { UsersService } from './users.service';
+import { User } from './user.entity.js';
+import { UsersService } from './users.service.js';
 
 @Resolver(() => User)
 export class UsersResolver {
@@ -503,8 +503,8 @@ import {
   MercuriusFederationDriverConfig,
 } from '@nestjs/mercurius';
 import { Module } from '@nestjs/common';
-import { UsersResolver } from './users.resolver';
-import { UsersService } from './users.service'; // Not included in this example
+import { UsersResolver } from './users.resolver.js';
+import { UsersService } from './users.service.js'; // Not included in this example
 
 @Module({
   imports: [
@@ -549,8 +549,8 @@ In the following example, the `PostsResolver` provides the `getUser()` method th
 
 ```typescript
 import { Query, Resolver, Parent, ResolveField } from '@nestjs/graphql';
-import { PostsService } from './posts.service';
-import { Post } from './posts.interfaces';
+import { PostsService } from './posts.service.js';
+import type { Post } from './posts.interfaces.js';
 
 @Resolver('Post')
 export class PostsResolver {
@@ -577,7 +577,7 @@ import {
 } from '@nestjs/mercurius';
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
-import { PostsResolver } from './posts.resolver';
+import { PostsResolver } from './posts.resolver.js';
 
 @Module({
   imports: [
@@ -598,7 +598,7 @@ First, we will have to declare a class representing the `User` entity. Although 
 
 ```ts
 import { Directive, ObjectType, Field, ID } from '@nestjs/graphql';
-import { Post } from './post.entity';
+import { Post } from './post.entity.js';
 
 @ObjectType()
 @Directive('@extends')
@@ -617,9 +617,9 @@ Now let's create the corresponding resolver for our extension on the `User` enti
 
 ```ts
 import { Parent, ResolveField, Resolver } from '@nestjs/graphql';
-import { PostsService } from './posts.service';
-import { Post } from './post.entity';
-import { User } from './user.entity';
+import { PostsService } from './posts.service.js';
+import { Post } from './post.entity.js';
+import { User } from './user.entity.js';
 
 @Resolver(() => User)
 export class UsersResolver {
@@ -636,7 +636,7 @@ We also have to define the `Post` entity class:
 
 ```ts
 import { Directive, Field, ID, Int, ObjectType } from '@nestjs/graphql';
-import { User } from './user.entity';
+import { User } from './user.entity.js';
 
 @ObjectType()
 @Directive('@key(fields: "id")')
@@ -659,9 +659,9 @@ And its resolver:
 
 ```ts
 import { Query, Args, ResolveField, Resolver, Parent } from '@nestjs/graphql';
-import { PostsService } from './posts.service';
-import { Post } from './post.entity';
-import { User } from './user.entity';
+import { PostsService } from './posts.service.js';
+import { Post } from './post.entity.js';
+import { User } from './user.entity.js';
 
 @Resolver(() => Post)
 export class PostsResolver {
@@ -692,10 +692,10 @@ import {
   MercuriusFederationDriverConfig,
 } from '@nestjs/mercurius';
 import { Module } from '@nestjs/common';
-import { User } from './user.entity';
-import { PostsResolver } from './posts.resolvers';
-import { UsersResolver } from './users.resolvers';
-import { PostsService } from './posts.service'; // Not included in example
+import { User } from './user.entity.js';
+import { PostsResolver } from './posts.resolvers.js';
+import { UsersResolver } from './users.resolvers.js';
+import { PostsService } from './posts.service.js'; // Not included in example
 
 @Module({
   imports: [
@@ -778,8 +778,8 @@ import {
   ApolloFederationDriverConfig,
 } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
-import { UsersResolver } from './users.resolver';
-import { UsersService } from './users.service'; // Not included in this example
+import { UsersResolver } from './users.resolver.js';
+import { UsersService } from './users.service.js'; // Not included in this example
 
 @Module({
   imports: [
@@ -827,7 +827,7 @@ Since we don't extend `User` entity anymore, we can simply remove `extends` and 
 
 ```ts
 import { Directive, ObjectType, Field, ID } from '@nestjs/graphql';
-import { Post } from './post.entity';
+import { Post } from './post.entity.js';
 
 @ObjectType()
 @Directive('@key(fields: "id")')
@@ -848,10 +848,10 @@ import {
   ApolloFederationDriverConfig,
 } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
-import { User } from './user.entity';
-import { PostsResolver } from './posts.resolvers';
-import { UsersResolver } from './users.resolvers';
-import { PostsService } from './posts.service'; // Not included in example
+import { User } from './user.entity.js';
+import { PostsResolver } from './posts.resolvers.js';
+import { UsersResolver } from './users.resolvers.js';
+import { PostsService } from './posts.service.js'; // Not included in example
 
 @Module({
   imports: [

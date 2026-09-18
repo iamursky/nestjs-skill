@@ -85,7 +85,7 @@ In the `UsersModule`, the only change needed is to add the `UsersService` to the
 
 ```typescript title="users/users.module.ts"
 import { Module } from '@nestjs/common';
-import { UsersService } from './users.service';
+import { UsersService } from './users.service.js';
 
 @Module({
   providers: [UsersService],
@@ -98,7 +98,7 @@ Our `AuthService` has the job of retrieving a user and verifying the password. W
 
 ```typescript title="auth/auth.service.ts"
 import { Injectable } from '@nestjs/common';
-import { UsersService } from '../users/users.service';
+import { UsersService } from '../users/users.service.js';
 
 @Injectable()
 export class AuthService {
@@ -121,8 +121,8 @@ Now, we update our `AuthModule` to import the `UsersModule`.
 
 ```typescript title="auth/auth.module.ts"
 import { Module } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { UsersModule } from '../users/users.module';
+import { AuthService } from './auth.service.js';
+import { UsersModule } from '../users/users.module.js';
 
 @Module({
   imports: [UsersModule],
@@ -139,7 +139,7 @@ Now we can implement our Passport **local authentication strategy**. Create a fi
 import { Strategy } from 'passport-local';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { AuthService } from './auth.service';
+import { AuthService } from './auth.service.js';
 
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
@@ -171,10 +171,10 @@ We need to configure our `AuthModule` to use the Passport features we just defin
 
 ```typescript title="auth/auth.module.ts"
 import { Module } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { UsersModule } from '../users/users.module';
+import { AuthService } from './auth.service.js';
+import { UsersModule } from '../users/users.module.js';
 import { PassportModule } from '@nestjs/passport';
-import { LocalStrategy } from './local.strategy';
+import { LocalStrategy } from './local.strategy.js';
 
 @Module({
   imports: [UsersModule, PassportModule],
@@ -289,7 +289,7 @@ With this in mind, we can now finally generate a real JWT, and return it in this
 
 ```typescript title="auth/auth.service.ts"
 import { Injectable } from '@nestjs/common';
-import { UsersService } from '../users/users.service';
+import { UsersService } from '../users/users.service.js';
 import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
@@ -337,12 +337,12 @@ Now, open `auth.module.ts` in the `auth` folder and update it to look like this:
 
 ```typescript title="auth/auth.module.ts"
 import { Module } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { LocalStrategy } from './local.strategy';
-import { UsersModule } from '../users/users.module';
+import { AuthService } from './auth.service.js';
+import { LocalStrategy } from './local.strategy.js';
+import { UsersModule } from '../users/users.module.js';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
-import { jwtConstants } from './constants';
+import { jwtConstants } from './constants.js';
 
 @Module({
   imports: [
@@ -365,8 +365,8 @@ Now we can update the `/auth/login` route to return a JWT.
 
 ```typescript title="app.controller.ts"
 import { Controller, Request, Post, UseGuards } from '@nestjs/common';
-import { LocalAuthGuard } from './auth/local-auth.guard';
-import { AuthService } from './auth/auth.service';
+import { LocalAuthGuard } from './auth/local-auth.guard.js';
+import { AuthService } from './auth/auth.service.js';
 
 @Controller()
 export class AppController {
@@ -397,7 +397,7 @@ We can now address our final requirement: protecting endpoints by requiring a va
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable } from '@nestjs/common';
-import { jwtConstants } from './constants';
+import { jwtConstants } from './constants.js';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -433,13 +433,13 @@ Add the new `JwtStrategy` as a provider in the `AuthModule`:
 
 ```typescript title="auth/auth.module.ts"
 import { Module } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { LocalStrategy } from './local.strategy';
-import { JwtStrategy } from './jwt.strategy';
-import { UsersModule } from '../users/users.module';
+import { AuthService } from './auth.service.js';
+import { LocalStrategy } from './local.strategy.js';
+import { JwtStrategy } from './jwt.strategy.js';
+import { UsersModule } from '../users/users.module.js';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
-import { jwtConstants } from './constants';
+import { jwtConstants } from './constants.js';
 
 @Module({
   imports: [
@@ -476,9 +476,9 @@ Open the `app.controller.ts` file and update it as shown below:
 
 ```typescript title="app.controller.ts"
 import { Controller, Get, Request, Post, UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from './auth/jwt-auth.guard';
-import { LocalAuthGuard } from './auth/local-auth.guard';
-import { AuthService } from './auth/auth.service';
+import { JwtAuthGuard } from './auth/jwt-auth.guard.js';
+import { LocalAuthGuard } from './auth/local-auth.guard.js';
+import { AuthService } from './auth/auth.service.js';
 
 @Controller()
 export class AppController {
@@ -582,7 +582,7 @@ export const IS_PUBLIC_KEY = 'isPublic';
 export const Public = () => SetMetadata(IS_PUBLIC_KEY, true);
 ```
 
-In the file above, we exported two constants. One being our metadata key named `IS_PUBLIC_KEY`, and the other being our new decorator itself that we’re going to call `Public` (you can alternatively name it `SkipAuth` or `AllowAnon`, whatever fits your project).
+In the file above, we exported two constants. One being our metadata key named `IS_PUBLIC_KEY`, and the other being our new decorator itself that we're going to call `Public` (you can alternatively name it `SkipAuth` or `AllowAnon`, whatever fits your project).
 
 Now that we have a custom `@Public()` decorator, we can use it to decorate any method, as follows:
 

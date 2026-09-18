@@ -49,7 +49,7 @@ The `forRoot()` method is used to register a `bullmq` package configuration obje
 - `settings: AdvancedSettings` - Advanced Queue configuration settings. These should usually not be changed. See [AdvancedSettings](https://github.com/OptimalBits/bull/blob/master/REFERENCE.md#queue) for more information. Optional.
 - `extraOptions` - Extra options for module init. See [Manual Registration](https://docs.nestjs.com/techniques/queues#manual-registration)
 
-All the options are optional, providing detailed control over queue behavior. These are passed directly to the BullMQ `Queue` constructor. Read more about these options and other options [here](https://api.docs.bullmq.io/interfaces/v4.QueueOptions.html).
+All the options are optional, providing detailed control over queue behavior. These are passed directly to the BullMQ `Queue` constructor. Read more about these options and other options [here](https://docs.bullmq.io/api/interfaces/v6.QueueOptions.html).
 
 To register a queue, import the `BullModule.registerQueue()` dynamic module, as follows:
 
@@ -192,7 +192,7 @@ const job = await this.audioQueue.add(
 );
 ```
 
-For a full list of options, check the API documentation [here](https://api.docs.bullmq.io/types/v4.JobsOptions.html) and [here](https://api.docs.bullmq.io/interfaces/v4.BaseJobOptions.html).
+For a full list of options, check the API documentation [here](https://docs.bullmq.io/api/types/v6.JobsOptions.html) and [here](https://docs.bullmq.io/api/interfaces/v6.BaseJobOptions.html).
 
 ## Consumers
 
@@ -229,7 +229,7 @@ export class AudioConsumer extends WorkerHost {
 
 The process method is called whenever the worker is idle and there are jobs to process in the queue. This handler method receives the `job` object as its only argument. The value returned by the handler method is stored in the job object and can be accessed later on, for example in a listener for the completed event.
 
-`Job` objects have multiple methods that allow you to interact with their state. For example, the above code uses the `updateProgress()` method to update the job's progress. See [here](https://api.docs.bullmq.io/classes/v4.Job.html) for the complete `Job` object API reference.
+`Job` objects have multiple methods that allow you to interact with their state. For example, the above code uses the `updateProgress()` method to update the job's progress. See [here](https://docs.bullmq.io/api/classes/v6.Job.html) for the complete `Job` object API reference.
 
 In the older version, Bull, you could designate that a job handler method will handle **only** jobs of a certain type (jobs with a specific `name`) by passing that `name` to the `@Process()` decorator as shown below.
 
@@ -314,7 +314,7 @@ export class AudioConsumer {
 }
 ```
 
-You can see the complete list of events and their arguments as properties of WorkerListener [here](https://api.docs.bullmq.io/interfaces/v4.WorkerListener.html).
+You can see the complete list of events and their arguments as properties of WorkerListener [here](https://docs.bullmq.io/api/interfaces/v6.WorkerListener.html).
 
 QueueEvent listeners must use the `@QueueEventsListener(queue)` decorator and extend the `QueueEventsHost` class provided by `@nestjs/bullmq`. To listen for an event, use the `@OnQueueEvent(event)` decorator with the event you want to be handled. For example, to listen to the event emitted when a job enters the active state in the `audio` queue, use the following construct:
 
@@ -338,11 +338,11 @@ export class AudioEventsListener extends QueueEventsHost {
 
 > info **Hint** QueueEvent Listeners must be registered as `providers` so the `@nestjs/bullmq` package can pick them up.
 
-You can see the complete list of events and their arguments as properties of QueueEventsListener [here](https://api.docs.bullmq.io/interfaces/v4.QueueEventsListener.html).
+You can see the complete list of events and their arguments as properties of QueueEventsListener [here](https://docs.bullmq.io/api/interfaces/v6.QueueEventsListener.html).
 
 ## Queue management
 
-Queues have an API that allows you to perform management functions like pausing and resuming, retrieving the count of jobs in various states, and several more. You can find the full queue API [here](https://api.docs.bullmq.io/classes/v4.Queue.html). Invoke any of these methods directly on the `Queue` object, as shown below with the pause/resume examples.
+Queues have an API that allows you to perform management functions like pausing and resuming, retrieving the count of jobs in various states, and several more. You can find the full queue API [here](https://docs.bullmq.io/api/classes/v6.Queue.html). Invoke any of these methods directly on the `Queue` object, as shown below with the pause/resume examples.
 
 Pause a queue with the `pause()` method call. A paused queue will not process new jobs until resumed, but current jobs being processed will continue until they are finalized.
 
@@ -356,6 +356,18 @@ To resume a paused queue, use the `resume()` method, as follows:
 await audioQueue.resume();
 ```
 
+## Observing queues in production
+
+Queues fail in ways that HTTP endpoints do not. A job doesn't return a status code to an impatient user - it retries quietly, three times, with backoff, and the only symptom is that something downstream never happened. The two questions that matter are therefore *"is this queue keeping up?"* and *"did that job run at all?"*, and neither is answerable from the consumer's own logs.
+
+[NestJS Observe](https://www.observe.nestjs.com/ 'NestJS Observe') instruments queue consumers automatically, the same way it instruments controllers - `@Processor` classes and their handlers are recognized as jobs, so no manual span wiring is needed:
+
+- **Queue wait time is measured separately from execution time.** A job that takes 200 ms to run but sat in the queue for four minutes is a capacity problem, not a slow handler, and the two numbers are reported side by side so you can tell which one you have.
+- **Attempts and failure reasons are recorded per run.** You see that a job succeeded on attempt 3 rather than seeing only the success, which is usually the difference between "fine" and "quietly degrading".
+- **Silence is alertable.** A *job silence* rule fires when a named job hasn't reported for longer than a tolerance you choose - which is how you find out that the nightly billing consumer stopped running, on the night it stops, rather than at the end of the month.
+
+Failed jobs carry the same error card as failed requests: the resolved stack trace with source lines, the logs written during the run, and the waterfall of what the job did before it threw. See the [Observability](https://docs.nestjs.com/observability/overview) chapter for setup.
+
 ## Separate processes
 
 Job handlers can also be run in a separate (forked) process ([source](https://docs.bullmq.io/guide/workers/sandboxed-processors)). This has several advantages:
@@ -363,7 +375,7 @@ Job handlers can also be run in a separate (forked) process ([source](https://do
 - The process is sandboxed so if it crashes it does not affect the worker.
 - You can run blocking code without affecting the queue (jobs will not stall).
 - Much better utilization of multi-core CPUs.
-- Less connections to redis.
+- Fewer connections to Redis.
 
 ```typescript title="app.module.ts"
 import { Module } from '@nestjs/common';
@@ -374,7 +386,7 @@ import { join } from 'node:path';
   imports: [
     BullModule.registerQueue({
       name: 'audio',
-      processors: [join(__dirname, 'processor.js')],
+      processors: [join(import.meta.dirname, 'processor.js')],
     }),
   ],
 })
@@ -748,7 +760,7 @@ constructor(@Inject(JOB_REF) jobRef: Job) {
 
 ## Event listeners
 
-Bull generates a set of useful events when queue and/or job state changes occur. Nest provides a set of decorators that allow subscribing to a core set of standard events. These are exported from the `@nestjs/bull` package.
+Bull generates a set of useful events when queue and/or job state changes occur. Nest provides a set of decorators that allow you to subscribe to a core set of standard events. These are exported from the `@nestjs/bull` package.
 
 Event listeners must be declared within a <a href="https://docs.nestjs.com/techniques/queues#consumers">consumer</a> class (i.e., within a class decorated with the `@Processor()` decorator). To listen for an event, use one of the decorators in the table below to declare a handler for the event. For example, to listen to the event emitted when a job enters the active state in the `audio` queue, use the following construct:
 
@@ -855,18 +867,18 @@ Job handlers can also be run in a separate (forked) process ([source](https://gi
 - The process is sandboxed so if it crashes it does not affect the worker.
 - You can run blocking code without affecting the queue (jobs will not stall).
 - Much better utilization of multi-core CPUs.
-- Less connections to redis.
+- Fewer connections to Redis.
 
 ```ts title="app.module.ts"
 import { Module } from '@nestjs/common';
 import { BullModule } from '@nestjs/bull';
-import { join } from 'path';
+import { join } from 'node:path';
 
 @Module({
   imports: [
     BullModule.registerQueue({
       name: 'audio',
-      processors: [join(__dirname, 'processor.js')],
+      processors: [join(import.meta.dirname, 'processor.js')],
     }),
   ],
 })

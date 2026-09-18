@@ -20,7 +20,7 @@ To facilitate that model, Nest provides a lightweight [CQRS module](https://gith
 
 ## Installation
 
-First install the required package:
+First, install the required package:
 
 ```bash
 $ npm install --save @nestjs/cqrs
