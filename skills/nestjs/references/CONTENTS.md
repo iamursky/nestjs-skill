@@ -2,7 +2,7 @@
 
 Faithful Markdown conversion of the official NestJS documentation (https://docs.nestjs.com), generated from the [nestjs/docs.nestjs.com](https://github.com/nestjs/docs.nestjs.com) `content/` source by `tools/build_references.py`. Each file keeps a `> Source:` link to its upstream file on GitHub. See `LICENSE` (MIT, Kamil Myśliwiec).
 
-Targets **NestJS v11**. **136 pages.**
+Targets **NestJS v11**. **144 pages.**
 
 ## Introduction
 
@@ -36,35 +36,12 @@ Targets **NestJS v11**. **136 pages.**
 - [Platform agnosticism](fundamentals/platform-agnosticism.md) — `fundamentals/platform-agnosticism.md`
 - [Testing](fundamentals/unit-testing.md) — `fundamentals/unit-testing.md`
 
-## Techniques
-
-- [Configuration](techniques/configuration.md) — `techniques/configuration.md`
-- [Database](techniques/sql.md) — `techniques/sql.md`
-- [Mongo](techniques/mongo.md) — `techniques/mongo.md`
-- [Validation](techniques/validation.md) — `techniques/validation.md`
-- [Caching](techniques/caching.md) — `techniques/caching.md`
-- [Serialization](techniques/serialization.md) — `techniques/serialization.md`
-- [Versioning](techniques/versioning.md) — `techniques/versioning.md`
-- [Task scheduling](techniques/task-scheduling.md) — `techniques/task-scheduling.md`
-- [Queues](techniques/queues.md) — `techniques/queues.md`
-- [Logger](techniques/logger.md) — `techniques/logger.md`
-- [Cookies](techniques/cookies.md) — `techniques/cookies.md`
-- [Events](techniques/events.md) — `techniques/events.md`
-- [Compression](techniques/compression.md) — `techniques/compression.md`
-- [File upload](techniques/file-upload.md) — `techniques/file-upload.md`
-- [Streaming files](techniques/streaming-files.md) — `techniques/streaming-files.md`
-- [HTTP module](techniques/http-module.md) — `techniques/http-module.md`
-- [Session](techniques/sessions.md) — `techniques/sessions.md`
-- [Model-View-Controller](techniques/mvc.md) — `techniques/mvc.md`
-- [Performance (Fastify)](techniques/performance.md) — `techniques/performance.md`
-- [Server-Sent Events](techniques/server-sent-events.md) — `techniques/server-sent-events.md`
-
 ## Security
 
 - [Authentication](security/authentication.md) — `security/authentication.md`
 - [Authorization](security/authorization.md) — `security/authorization.md`
 - [Encryption and Hashing](security/encryption-hashing.md) — `security/encryption-hashing.md`
-- [Helmet](security/helmet.md) — `security/helmet.md`
+- [Security headers](security/helmet.md) — `security/helmet.md`
 - [CORS](security/cors.md) — `security/cors.md`
 - [CSRF Protection](security/csrf.md) — `security/csrf.md`
 - [Rate Limiting](security/rate-limiting.md) — `security/rate-limiting.md`
@@ -148,20 +125,11 @@ Targets **NestJS v11**. **136 pages.**
 - [SWC](recipes/swc.md) — `recipes/swc.md`
 - [Passport (authentication)](recipes/passport.md) — `recipes/passport.md`
 - [Hot Reload](recipes/hot-reload.md) — `recipes/hot-reload.md`
-- [MikroORM](recipes/mikroorm.md) — `recipes/mikroorm.md`
-- [SQL (TypeORM)](recipes/sql-typeorm.md) — `recipes/sql-typeorm.md`
-- [MongoDB (Mongoose)](recipes/mongodb.md) — `recipes/mongodb.md`
-- [SQL (Sequelize)](recipes/sql-sequelize.md) — `recipes/sql-sequelize.md`
 - [Router module](recipes/router-module.md) — `recipes/router-module.md`
-- [Documentation](recipes/documentation.md) — `recipes/documentation.md`
 - [CQRS](recipes/cqrs.md) — `recipes/cqrs.md`
-- [Prisma](recipes/prisma.md) — `recipes/prisma.md`
-- [Sentry](recipes/sentry.md) — `recipes/sentry.md`
 - [Serve Static](recipes/serve-static.md) — `recipes/serve-static.md`
 - [Nest Commander](recipes/nest-commander.md) — `recipes/nest-commander.md`
 - [Async Local Storage](recipes/async-local-storage.md) — `recipes/async-local-storage.md`
-- [Necord](recipes/necord.md) — `recipes/necord.md`
-- [Suites](recipes/suites.md) — `recipes/suites.md`
 - [Healthchecks (Terminus)](recipes/terminus.md) — `recipes/terminus.md`
 
 ## FAQ
@@ -190,4 +158,44 @@ Targets **NestJS v11**. **136 pages.**
 - [Who is using Nest?](discover/who-uses.md) — `discover/who-uses.md`
 - [Official NestJS Consulting](enterprise.md) — `enterprise.md`
 - [Support](support.md) — `support.md`
+
+## Other pages
+
+- [Configuration](application/configuration.md) — `application/configuration.md`
+- [Events](application/events.md) — `application/events.md`
+- [File storage](application/file-storage.md) — `application/file-storage.md`
+- [HTTP client](application/http-client.md) — `application/http-client.md`
+- [Logger](application/logger.md) — `application/logger.md`
+- [Queues](application/queues.md) — `application/queues.md`
+- [Serialization](application/serialization.md) — `application/serialization.md`
+- [Task scheduling](application/task-scheduling.md) — `application/task-scheduling.md`
+- [Validation](application/validation.md) — `application/validation.md`
+- [Caching](data/caching.md) — `data/caching.md`
+- [Drizzle](data/drizzle.md) — `data/drizzle.md`
+- [MikroORM](data/mikroorm.md) — `data/mikroorm.md`
+- [Mongo](data/mongo.md) — `data/mongo.md`
+- [Overview](data/overview.md) — `data/overview.md`
+- [Prisma](data/prisma.md) — `data/prisma.md`
+- [Sequelize](data/sequelize.md) — `data/sequelize.md`
+- [TypeORM](data/typeorm.md) — `data/typeorm.md`
+- [Compression](http/compression.md) — `http/compression.md`
+- [Cookies](http/cookies.md) — `http/cookies.md`
+- [File upload and streaming](http/file-upload.md) — `http/file-upload.md`
+- [Model-View-Controller](http/mvc.md) — `http/mvc.md`
+- [Performance (Fastify)](http/performance.md) — `http/performance.md`
+- [Server-Sent Events](http/server-sent-events.md) — `http/server-sent-events.md`
+- [Session](http/sessions.md) — `http/sessions.md`
+- [Versioning](http/versioning.md) — `http/versioning.md`
+- [Pre-request hooks](microservices/pre-request-hooks.md) — `microservices/pre-request-hooks.md`
+- [Dashboard](observability/dashboard.md) — `observability/dashboard.md`
+- [Distributed tracing](observability/distributed-tracing.md) — `observability/distributed-tracing.md`
+- [Error monitoring](observability/error-monitoring.md) — `observability/error-monitoring.md`
+- [Manual instrumentation](observability/manual-instrumentation.md) — `observability/manual-instrumentation.md`
+- [MCP server](observability/mcp-server.md) — `observability/mcp-server.md`
+- [Overview](observability/overview.md) — `observability/overview.md`
+- [SDK](observability/sdk.md) — `observability/sdk.md`
+- [Idempotency keys](reliability/idempotency.md) — `reliability/idempotency.md`
+- [Distributed locks](reliability/locks.md) — `reliability/locks.md`
+- [Outbox](reliability/outbox.md) — `reliability/outbox.md`
+- [Resilience](reliability/resilience.md) — `reliability/resilience.md`
 
