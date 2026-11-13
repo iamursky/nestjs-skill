@@ -2,7 +2,7 @@
 
 # Security
 
-To define which security mechanisms should be used for a specific operation, use the `@ApiSecurity()` decorator.
+To define which security mechanisms a specific operation uses, apply the `@ApiSecurity()` decorator:
 
 ```typescript
 @ApiSecurity('basic')
@@ -10,7 +10,7 @@ To define which security mechanisms should be used for a specific operation, use
 export class CatsController {}
 ```
 
-Before you run your application, remember to add the security definition to your base document using `DocumentBuilder`:
+Before you run your application, add the security definition to your base document using `DocumentBuilder`:
 
 ```typescript
 const options = new DocumentBuilder().addSecurity('basic', {
@@ -19,11 +19,11 @@ const options = new DocumentBuilder().addSecurity('basic', {
 });
 ```
 
-Some of the most popular authentication techniques are built-in (e.g., `basic` and `bearer`) and therefore you don't have to define security mechanisms manually as shown above.
+The most popular authentication techniques (e.g., `basic` and `bearer`) are built in, so you don't have to define their security mechanisms manually as shown above.
 
 ## Basic authentication
 
-To enable basic authentication, use `@ApiBasicAuth()`.
+To enable basic authentication, use `@ApiBasicAuth()`:
 
 ```typescript
 @ApiBasicAuth()
@@ -31,7 +31,7 @@ To enable basic authentication, use `@ApiBasicAuth()`.
 export class CatsController {}
 ```
 
-Before you run your application, remember to add the security definition to your base document using `DocumentBuilder`:
+Before you run your application, add the security definition to your base document using `DocumentBuilder`:
 
 ```typescript
 const options = new DocumentBuilder().addBasicAuth();
@@ -39,7 +39,7 @@ const options = new DocumentBuilder().addBasicAuth();
 
 ## Bearer authentication
 
-To enable bearer authentication, use `@ApiBearerAuth()`.
+To enable bearer authentication, use `@ApiBearerAuth()`:
 
 ```typescript
 @ApiBearerAuth()
@@ -47,7 +47,7 @@ To enable bearer authentication, use `@ApiBearerAuth()`.
 export class CatsController {}
 ```
 
-Before you run your application, remember to add the security definition to your base document using `DocumentBuilder`:
+Before you run your application, add the security definition to your base document using `DocumentBuilder`:
 
 ```typescript
 const options = new DocumentBuilder().addBearerAuth();
@@ -55,7 +55,7 @@ const options = new DocumentBuilder().addBearerAuth();
 
 ## OAuth2 authentication
 
-To enable OAuth2, use `@ApiOAuth2()`.
+To enable OAuth2, use `@ApiOAuth2()`:
 
 ```typescript
 @ApiOAuth2(['pets:write'])
@@ -63,7 +63,7 @@ To enable OAuth2, use `@ApiOAuth2()`.
 export class CatsController {}
 ```
 
-Before you run your application, remember to add the security definition to your base document using `DocumentBuilder`:
+Before you run your application, add the security definition to your base document using `DocumentBuilder`:
 
 ```typescript
 const options = new DocumentBuilder().addOAuth2();
@@ -71,7 +71,7 @@ const options = new DocumentBuilder().addOAuth2();
 
 ## Cookie authentication
 
-To enable cookie authentication, use `@ApiCookieAuth()`.
+To enable cookie authentication, use `@ApiCookieAuth()`:
 
 ```typescript
 @ApiCookieAuth()
@@ -79,7 +79,7 @@ To enable cookie authentication, use `@ApiCookieAuth()`.
 export class CatsController {}
 ```
 
-Before you run your application, remember to add the security definition to your base document using `DocumentBuilder`:
+Before you run your application, add the security definition to your base document using `DocumentBuilder`:
 
 ```typescript
 const options = new DocumentBuilder().addCookieAuth('optional-session-id');
